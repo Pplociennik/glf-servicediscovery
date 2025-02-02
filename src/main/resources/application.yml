@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: "servicediscovery"
+  profiles:
+    active: "@spring.profiles.active@"
