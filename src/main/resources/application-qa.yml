@@ -31,6 +31,14 @@ management:
       export:
         enabled: true
 
+logging:
+  level:
+    com:
+      goaleaf:
+        servicediscovery: DEBUG
+  pattern:
+    level: "%5p [${spring.application.name}, %X{trace_id}, %X{span_id}]"
+
 info:
   app:
     name: "@project.name@"
