@@ -32,3 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 /docker/glf-servicediscovery.jar
+/docker/opentelemetry-javaagent-2.12.0.jar
