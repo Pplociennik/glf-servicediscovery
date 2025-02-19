@@ -97,6 +97,35 @@
     </build>
 
     <profiles>
+
+        <!--    Properties necessary for building a docker image on linux systems.    -->
+        <profile>
+            <id>linux</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <image-exec-id>run-sh-file</image-exec-id>
+                <image-exec-executable>sh</image-exec-executable>
+                <image-exec-argument>-c</image-exec-argument>
+                <image-exec-script-file>${project.basedir}/docker/build.sh</image-exec-script-file>
+            </properties>
+        </profile>
+
+        <!--    Properties necessary for building docker image on windows systems. Active by default.    -->
+        <profile>
+            <id>windows</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <image-exec-id>run-bat-file</image-exec-id>
+                <image-exec-executable>cmd</image-exec-executable>
+                <image-exec-argument>/c</image-exec-argument>
+                <image-exec-script-file>${project.basedir}/docker/build.bat</image-exec-script-file>
+            </properties>
+        </profile>
+
         <!-- 'dev' profile -->
         <profile>
             <id>dev</id>
@@ -184,16 +213,16 @@
                         <version>${version.maven-exec-plugin}</version>
                         <executions>
                             <execution>
-                                <id>run-bat-file</id>
+                                <id>${image-exec-id}</id>
                                 <phase>install</phase>
                                 <goals>
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>cmd</executable>
+                                    <executable>${image-exec-executable}</executable>
                                     <arguments>
-                                        <argument>/c</argument>
-                                        <argument>${project.basedir}/docker/build.bat</argument>
+                                        <argument>${image-exec-argument}</argument>
+                                        <argument>${image-exec-script-file}</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
